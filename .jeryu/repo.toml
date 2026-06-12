@@ -1,0 +1,12 @@
+repo = "root/jankurai-deploy"
+default_branch = "main"
+
+[shadow_main]
+enabled = true
+remote_url = "git@github.com:neverhuman/jankurai-deploy.git"
+refs = ["refs/heads/main"]
+
+[tag_mirror]
+enabled = true
+remote_url = "git@github.com:neverhuman/jankurai-deploy.git"
+tag_pattern = "jankurai-deploy-v*"
