@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Install a pinned Node.js toolchain when the runner does not already provide
-# the requested major version. GitLab jobs use this to mirror GitHub's
-# setup-node step without relying on runner image state.
+# the requested major version. Jeryu CI jobs (ssh://git@127.0.0.1:2224/root/*)
+# use this to mirror GitHub's setup-node step without relying on runner image
+# state.
 source "$(dirname "${BASH_SOURCE[0]}")/lib.sh"
 
 node_major="${NODE_VERSION%%.*}"

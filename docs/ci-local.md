@@ -15,7 +15,7 @@ between local work and the remote merge gate.
 | `just ci-release`| `release / audit-gate`                      | 20–35 min       |
 | `just ci-release-build` | `release / build`                  | 15–30 min       |
 | `just ci-release-publish` | `release / publish`              | 5–10 min        |
-| `just ci-shadow` | GitLab main shadow deploy           | < 1 min         |
+| `just ci-shadow` | Jeryu main shadow deploy            | < 1 min         |
 | `just ci`        | quick + coverage + audit                    | 25–40 min       |
 | `just zizmor`    | zizmor scan portion of the security lane    | < 5 s           |
 
@@ -110,9 +110,10 @@ The release.yml publish job. It expects `LOCAL_RELEASE_TAG=vX.Y.Z` and
 formula metadata before publishing the immutable tag.
 
 ### `just ci-shadow`
-The GitLab main-branch shadow deploy. It expects the local checkout to point at
-the internal GitLab origin and uses the local `.jeryu/local/repos/jankurai.toml`
-sidecar to mirror `main` to GitHub after the internal pipeline has passed.
+The Jeryu main-branch shadow deploy. It expects the local checkout to point at
+the Jeryu remote origin (`ssh://git@127.0.0.1:2224/root/*`) and uses the local
+`.jeryu/local/repos/jankurai.toml` sidecar to mirror `main` to GitHub after the
+Jeryu pipeline has passed.
 
 ### `just zizmor`
 Static analysis of GitHub workflows. Run before pushing any `.github/workflows/`

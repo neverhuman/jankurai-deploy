@@ -1,0 +1,55 @@
+# Proof lanes for jankurai-deploy. Every lane command runs in this repo alone
+# and produces the artifacts it declares. Lanes mirror the root Justfile targets
+# and the ops/ci/*.sh entrypoints the GitHub workflows call.
+
+[[lane]]
+name = "fast"
+command = "just fast"
+purpose = "run the required local CI cascade and a no-write jankurai self-audit"
+command_id = "lane.fast"
+kind = "validation"
+cost = 5
+rules_covered = ["HLT-003-OWNERLESS-PATH", "HLT-004-UNMAPPED-PROOF", "HLT-042-CI-LOCAL-PARITY"]
+required_artifacts = ["target/jankurai/repo-score.json", "target/jankurai/repo-score.md"]
+timeout_seconds = 900
+requires_network = false
+destructive = false
+
+[[lane]]
+name = "audit"
+command = "just audit"
+purpose = "write .jankurai/repo-score.json and .jankurai/repo-score.md"
+command_id = "lane.audit"
+kind = "audit"
+cost = 8
+rules_covered = ["HLT-003-OWNERLESS-PATH", "HLT-004-UNMAPPED-PROOF"]
+required_artifacts = [".jankurai/repo-score.json", ".jankurai/repo-score.md"]
+timeout_seconds = 900
+requires_network = false
+destructive = false
+
+[[lane]]
+name = "security"
+command = "just security"
+purpose = "secret scanning (gitleaks) and dependency scanning (cargo audit)"
+command_id = "lane.security"
+kind = "security"
+cost = 10
+rules_covered = ["HLT-016-SUPPLY-CHAIN-DRIFT"]
+required_artifacts = []
+timeout_seconds = 1200
+requires_network = true
+destructive = false
+
+[[lane]]
+name = "release"
+command = "just release"
+purpose = "the artifact-backed release audit gate run before tagging"
+command_id = "lane.release"
+kind = "release"
+cost = 15
+rules_covered = ["HLT-025-RELEASE-READINESS-GAP"]
+required_artifacts = ["target/jankurai/repo-score.json"]
+timeout_seconds = 2400
+requires_network = false
+destructive = false

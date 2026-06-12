@@ -173,6 +173,25 @@ jobs:
       - name: Audit lane
         run: bash ops/ci/audit.sh
 
+      # Publish the agent-routable repo-score artifacts that the audit-adopting
+      # jankurai tools (audit-ci, contract-drift, authz-matrix, agent-tool-supply,
+      # release-readiness, cost-budget) replace.
+      - name: jankurai audit (repo-score)
+        if: always()
+        run: |
+          mkdir -p .jankurai
+          jankurai audit . --mode advisory --json .jankurai/repo-score.json --md .jankurai/repo-score.md
+
+      - name: Upload repo-score artifacts
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: repo-score
+          if-no-files-found: ignore
+          path: |
+            .jankurai/repo-score.json
+            .jankurai/repo-score.md
+
       - name: Publish jankurai summary
         if: always()
         run: |
@@ -213,3 +232,48 @@ jobs:
             target/jankurai/migration-prompt-verification.md
             target/jankurai/migration-slice-risk.json
             target/jankurai/migration-slice-risk.md
+
+  tool-adoption:
+    name: tool-adoption-evidence
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Install Rust toolchain
+        run: rustup show
+
+      - uses: Swatinem/rust-cache@9d47c6ad4b02e050fd481d890b2ea34778fd09d6
+        with:
+          shared-key: tool-adoption
+
+      # Run every adopted jankurai tool lane. The script holds the canonical
+      # catalog commands so local runs and CI execute the exact replacements.
+      - name: Run adopted jankurai tool lanes
+        run: bash ops/ci/tool-adoption.sh
+
+      - name: Upload tool-adoption evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: tool-adoption-evidence
+          if-no-files-found: ignore
+          path: |
+            .jankurai/repo-score.json
+            .jankurai/repo-score.md
+            target/jankurai/repo-score.json
+            target/jankurai/repo-score.md
+            target/jankurai/repair-queue.jsonl
+            target/jankurai/proof-plan.json
+            target/jankurai/proof-plan.md
+            target/jankurai/proofbind/surface-witness.json
+            target/jankurai/proofbind/obligations.json
+            target/jankurai/copy-code.json
+            target/jankurai/copy-code.md
+            target/jankurai/security/evidence.json
+            target/jankurai/language-bad-behavior.log

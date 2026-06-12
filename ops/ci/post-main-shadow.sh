@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-# Post-main GitHub shadow: after the internal GitLab merge succeeds, mirror the
-# accepted main commit through Jeryu's local shadow config and write a receipt.
+# Post-main GitHub shadow: after the merge into the local Jeryu remote
+# (ssh://git@127.0.0.1:2224/root/*) succeeds, mirror the accepted main commit
+# through Jeryu's local shadow config and write a receipt.
 source "$(dirname "${BASH_SOURCE[0]}")/lib.sh"
 
 ensure_dir "${ARTIFACT_ROOT}"
@@ -61,7 +62,7 @@ if [[ -z "${branch}" || "${branch}" != "main" ]]; then
 fi
 
 if [[ "${origin_url}" != "${expected_origin}" ]]; then
-  write_receipt "failed" "origin must point at the internal GitLab remote"
+  write_receipt "failed" "origin must point at the local Jeryu remote"
   fail "expected origin ${expected_origin}, got ${origin_url}"
 fi
 

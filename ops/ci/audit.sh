@@ -97,4 +97,13 @@ jankurai audit . \
 
 assert_nonempty "${ARTIFACT_ROOT}/repo-score.json"
 assert_nonempty "${ARTIFACT_ROOT}/repo-score.md"
+
+# Also publish the agent-routable repo-score artifacts at the canonical
+# .jankurai/ paths so the audit-adopting jankurai tools (audit-ci,
+# contract-drift, authz-matrix, agent-tool-supply, release-readiness,
+# cost-budget) have CI evidence routed to .jankurai/repo-score.{json,md}.
+mkdir -p .jankurai
+jankurai audit . --mode advisory --json .jankurai/repo-score.json --md .jankurai/repo-score.md
+assert_nonempty .jankurai/repo-score.json
+assert_nonempty .jankurai/repo-score.md
 assert_nonempty "${ARTIFACT_ROOT}/jankurai.sarif"

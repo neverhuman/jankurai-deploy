@@ -9,13 +9,57 @@
       "command": "bash scripts/ci-local.sh required",
       "purpose": "verify split metadata stays coherent"
     },
+    "README.md": {
+      "command": "bash scripts/ci-local.sh required",
+      "purpose": "verify the root readme routes to the deploy layout"
+    },
+    "LICENSE": {
+      "command": "bash scripts/ci-local.sh required",
+      "purpose": "verify the license file is present and unmodified"
+    },
+    "CHANGELOG.md": {
+      "command": "bash scripts/ci-local.sh required",
+      "purpose": "verify the changelog tracks released versions"
+    },
+    "VERSION": {
+      "command": "bash scripts/ci-local.sh required",
+      "purpose": "verify the declared deploy version stays coherent with release metadata"
+    },
+    "Justfile": {
+      "command": "bash scripts/ci-local.sh required",
+      "purpose": "verify the root command surface lanes are runnable"
+    },
+    ".gitignore": {
+      "command": "bash scripts/ci-local.sh required",
+      "purpose": "verify the exclusion list keeps transient build paths untracked"
+    },
+    "action.yml": {
+      "command": "bash scripts/ci-local.sh required",
+      "purpose": "verify the composite GitHub Action entrypoint stays coherent"
+    },
+    "jankurai-installer.sh": {
+      "command": "bash scripts/ci-local.sh required",
+      "purpose": "verify the installer script syntax-checks and stays coherent"
+    },
     ".jeryu/": {
       "command": "bash scripts/ci-local.sh required",
       "purpose": "verify local Jeryu and GitHub mirror metadata"
     },
+    ".github/": {
+      "command": "bash scripts/ci-local.sh required",
+      "purpose": "verify CI workflow entrypoints stay pinned and thin"
+    },
     "agent/": {
       "command": "bash scripts/ci-local.sh required",
       "purpose": "verify split control maps and standard metadata"
+    },
+    "docs/": {
+      "command": "bash scripts/ci-local.sh required",
+      "purpose": "verify agent-readable documentation stays present"
+    },
+    "schemas/": {
+      "command": "bash scripts/ci-local.sh required",
+      "purpose": "verify the artifact contract schemas stay present and valid JSON"
     },
     "ops/": {
       "command": "bash scripts/ci-local.sh required",
@@ -23,7 +67,7 @@
     },
     "scripts/": {
       "command": "bash scripts/ci-local.sh required",
-      "purpose": "verify local CI and fusion helpers"
+      "purpose": "verify local CI and split metadata helpers"
     },
     ".": {
       "command": "bash scripts/ci-local.sh required",

@@ -1,0 +1,30 @@
+# Boundary manifest for jankurai-deploy.
+# This is the release, signing, mirroring, and split-generator member of the
+# Jankurai split family. Only the ops boundary applies here; web, database,
+# queue, and Python product surfaces are not part of this repo.
+# See docs/boundaries.md for the prose companion.
+
+[stack]
+id = "rust-ts-vite-react-postgres-bounded-python"
+version = "0.5.0"
+
+[ops]
+# Paths this member owns. Every entry resolves inside this repo.
+owns = [
+  ".github/",
+  ".jeryu/",
+  "ops/",
+  "scripts/",
+  "action.yml",
+  "jankurai-installer.sh",
+]
+# Surfaces this member must never grow. Product feature code, domain policy,
+# and direct database writes belong to the product members of the family.
+forbidden = [
+  "crates/",
+  "apps/",
+  "packages/",
+  "db/",
+  "python/",
+]
+proof_lane = "release"
