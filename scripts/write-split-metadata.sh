@@ -4,9 +4,9 @@ set -euo pipefail
 
 root="${1:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
 source_commit="${SOURCE_COMMIT:-cea83b0cbe204be276a2f0299cd760f6812ea2b0}"
-split_release="${SPLIT_RELEASE:-1.7.0-split.0}"
+split_release="${SPLIT_RELEASE:-1.7.0}"
 standard_version="${STANDARD_VERSION:-0.9.0}"
-auditor_version="${AUDITOR_VERSION:-1.6.0}"
+auditor_version="${AUDITOR_VERSION:-1.7.0}"
 schema_version="${SCHEMA_VERSION:-1.9.0}"
 
 repos=(
@@ -18,6 +18,7 @@ repos=(
   jankurai-paper
   jankurai-tools-tui
   jankurai-tools-ux
+  jankurai-tools-kernel
   jankurai-tools-guard
   jankurai-tools-proof
   jankurai-tools-dedup
@@ -76,8 +77,8 @@ write_common_files() {
 
 Read \`SPLIT.md\` first. This repository is one member of the Jankurai split family.
 
-- Canonical local Jeryu repo: \`root/${repo}\`.
-- Public mirror target: \`github.com/neverhuman/${repo}\`.
+- Historical Jeryu repo: \`root/${repo}\`.
+- Primary GitHub repository: \`github.com/neverhuman/${repo}\`.
 - Do not add committed cross-repo \`path = "../..."\` dependencies. Use the hub fusion workspace for local path patches.
 - Do not hand-edit generated artifacts listed in \`agent/generated-zones.toml\`.
 - Run \`bash scripts/ci-local.sh required\` before handing off changes.
@@ -97,14 +98,14 @@ ${role}
 
 ## Repositories
 
-- Local authoritative repo: \`root/${repo}\`
-- Public mirror: \`neverhuman/${repo}\`
+- Historical Jeryu repo: \`root/${repo}\`
+- Primary GitHub repository: \`neverhuman/${repo}\`
 - Release tag pattern: \`${repo}-v${split_release}\`
 - Source extraction commit: \`${source_commit}\`
 
 ## Split Rules
 
-- Jeryu remains authoritative; GitHub is the public mirror.
+- GitHub is authoritative; Jeryu refs remain historical inputs.
 - Release builds depend on immutable GitHub tags, not branches.
 - Local development uses the hub \`scripts/fuse.sh\` output under \`.fusion/\`.
 - Committed manifests must not depend on sibling checkout paths.

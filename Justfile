@@ -26,17 +26,17 @@ bootstrap: setup
 # Uses the cached, target-only build path so reruns stay fast.
 fast:
     bash scripts/ci-local.sh required
-    cargo check -p jankurai --locked
     jankurai audit . --no-score-history --json target/jankurai/repo-score.json --md target/jankurai/repo-score.md
 
 # Narrow per-package build of the released auditor crate against the locked
 # dependency graph; the cached release pipeline reuses this target output.
 build-jankurai:
-    cargo build --release --locked -p jankurai
+    bash ../jankurai/scripts/family.sh build --release
 
 # Run the full local check: fast lane, security scanning, release audit gate,
 # and the jankurai self-audit. This is the command CI mirrors per job.
-check: fast security audit
+check:
+    bash ops/ci/github-check.sh
 
 # Verify is an alias of check for agents that look for a `verify` lane.
 verify: check
@@ -57,7 +57,7 @@ test:
 security:
     bash ops/ci/security-tools.sh
     gitleaks detect --source . --no-banner --redact
-    cargo audit
+    actionlint .github/workflows/*.yml
 
 # Jankurai self-audit lane: writes the repo-score artifacts that CI uploads.
 # Mirrors the jankurai audit + repo-score control plane in ops/ci/audit.sh.
