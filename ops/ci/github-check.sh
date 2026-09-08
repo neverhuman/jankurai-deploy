@@ -10,5 +10,5 @@ gitleaks detect --source . --no-banner --redact
 actionlint .github/workflows/*.yml
 zizmor .github/workflows
 syft dir:. -o cyclonedx-json=target/jankurai/security/sbom.json
-jankurai audit . --mode ratchet --baseline target/jankurai/accepted-baseline.json \
+jankurai audit . --mode ratchet --baseline target/jankurai/accepted-baseline.json --full \
   --no-score-history --json .jankurai/repo-score.json --md .jankurai/repo-score.md
