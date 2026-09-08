@@ -18,6 +18,7 @@
     "scripts/": "ops",
     "docs/": "standard",
     "schemas/": "standard",
-    "target/": "tools"
+    "target/": "tools",
+    ".gitleaksignore": "ops"
   }
 }
