@@ -1,5 +1,9 @@
 # jankurai-deploy
 
+<!-- jankurai-badge:start -->
+[![Jankurai score: 86/100](agent/jankurai-badge.svg)](agent/jankurai-badge.json)
+<!-- jankurai-badge:end -->
+
 [![jankurai audit](https://img.shields.io/badge/jankurai-audit-passing-brightgreen)](docs/release.md)
 
 Release, signing, installer-publishing, mirroring, and split-generator tooling

@@ -16,8 +16,10 @@
     "agent/": "agent",
     "ops/": "ops",
     "scripts/": "ops",
+    "tools/": "ops",
     "docs/": "standard",
     "schemas/": "standard",
-    "target/": "tools"
+    "target/": "tools",
+    ".gitleaksignore": "ops"
   }
 }
