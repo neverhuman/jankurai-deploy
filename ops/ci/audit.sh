@@ -108,9 +108,17 @@ assert_nonempty .jankurai/repo-score.json
 assert_nonempty .jankurai/repo-score.md
 assert_nonempty "${ARTIFACT_ROOT}/jankurai.sarif"
 
-if [[ -f agent/badge.toml && -f agent/jankurai-badge.svg ]]; then
-  log "audit lane: first-party badge presence"
+if [[ -f agent/badge.toml ]]; then
+  log "audit lane: jankurai badge --check"
   grep -q 'jankurai-badge:start' README.md
   test -s agent/jankurai-badge.svg
   test -s agent/jankurai-badge.json
+  jankurai badge --check \
+    --score agent/baselines/main.repo-score.json \
+    --out agent/jankurai-badge.svg \
+    --json-out agent/jankurai-badge.json \
+    --readme README.md \
+    --link agent/jankurai-badge.json \
+    --update-readme \
+    --label jankurai
 fi
