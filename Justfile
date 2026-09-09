@@ -55,9 +55,7 @@ test:
 # Security lane: secret scanning (gitleaks) plus dependency vulnerability
 # scanning (cargo audit). Installs pinned tools then runs the strict scan.
 security:
-    bash ops/ci/security-tools.sh
-    gitleaks detect --source . --no-banner --redact
-    actionlint .github/workflows/*.yml
+    bash tools/security-lane.sh
 
 # Jankurai self-audit lane: writes the repo-score artifacts that CI uploads.
 # Mirrors the jankurai audit + repo-score control plane in ops/ci/audit.sh.

@@ -69,6 +69,10 @@
       "command": "bash scripts/ci-local.sh required",
       "purpose": "verify local CI and split metadata helpers"
     },
+    "tools/": {
+      "command": "bash scripts/ci-local.sh required",
+      "purpose": "verify the canonical security lane wrapper stays runnable"
+    },
     ".": {
       "command": "bash scripts/ci-local.sh required",
       "purpose": "required local proof for jankurai-deploy"
